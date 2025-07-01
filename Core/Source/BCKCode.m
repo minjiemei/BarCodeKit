@@ -652,7 +652,9 @@ NSString * const BCKCodeDrawingIncludeCaption = @"BCKCodeDrawingIncludeCaption";
         default:
            x = CGRectGetMidX(rect) - width/2.0f;
     }
-    
+    if (x < 0) {
+        x = 0;
+    }
 	CGFloat y = CGRectGetMaxY(rect) - descent;
 	CGContextSetTextPosition(context, x, y);
 	
@@ -975,7 +977,7 @@ NSString * const BCKCodeDrawingIncludeCaption = @"BCKCodeDrawingIncludeCaption";
 			// Draw Captions
 			if (leftDigits)
 			{
-                [self _drawCaptionText:leftDigits fontName:fontName fontSize:optimalCaptionFontSize alignment:NSTextAlignmentRight inRect:leftNumberFrame context:context];
+                [self _drawCaptionText:leftDigits fontName:fontName fontSize:optimalCaptionFontSize alignment:NSTextAlignmentCenter inRect:leftNumberFrame context:context];
 			}
 			
 			if (rightDigits)
