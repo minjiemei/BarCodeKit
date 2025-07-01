@@ -36,6 +36,7 @@ NSString * const BCKCodeDrawingReduceBleedOption = @"BCKCodeDrawingReduceBleed";
 NSString * const BCKCodeDrawingSizeWidthOption = @"BCKCodeDrawingSizeWidthOption";
 NSString * const BCKCodeDrawingSizeHeightOption = @"BCKCodeDrawingSizeHeightOption";
 NSString * const BCKCodeDrawingSuppressQuietZones = @"BCKCodeDrawingSuppressQuietZones";
+NSString * const BCKCodeDrawingIncludeCaption = @"BCKCodeDrawingIncludeCaption";
 
 #define ENCODE_ERROR_MESSAGE @"BCKCode is an abstract class that cannot encode anything"
 
@@ -119,7 +120,13 @@ NSString * const BCKCodeDrawingSuppressQuietZones = @"BCKCodeDrawingSuppressQuie
 	
 	return leftQuietZoneText;
 }
-
+- (BOOL)supportDrawCaption:(NSDictionary *)options{
+    if ([options.allKeys containsObject: BCKCodeDrawingIncludeCaption]) {
+        return [options[BCKCodeDrawingIncludeCaption] boolValue];
+    } else {
+        return YES;
+    }
+}
 // returns the actually displayed right quiet zone text based on the options
 - (NSString *)_rightQuietZoneDisplayTextWithOptions:(NSDictionary *)options
 {
@@ -774,6 +781,12 @@ NSString * const BCKCodeDrawingSuppressQuietZones = @"BCKCodeDrawingSuppressQuie
 		
 		bottomCaptionRegion = CGRectMake(0, size.height-captionHeight - barScale, size.width, captionHeight + barScale);
 	}
+    if ([self supportDrawCaption:options] == NO) {
+        leftQuietZoneText = nil;
+        leftDigits = nil;
+        rightDigits = nil;
+        rightQuietZoneText = nil;
+    }
 	
 	// determine bar lengths, bars for digits are usually shorter than bars for markers
 	CGFloat captionOverlap = [self _markerBarCaptionOverlapFromOptions:options];
