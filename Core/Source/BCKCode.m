@@ -673,7 +673,7 @@ NSString * const BCKCodeDrawingIncludeCaption = @"BCKCodeDrawingIncludeCaption";
 
 	CGSize size = CGSizeZero;
 	
-	size.width = (length + 2.0f * horizontalQuietZoneWidth) * barScale;
+	size.width = (length + 2.3f * horizontalQuietZoneWidth) * barScale;
 	
 	CGFloat aspectRatio = [self aspectRatio];
 	
